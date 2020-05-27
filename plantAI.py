@@ -6,6 +6,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.layers import Flatten
 
+
 # Болезни растений
 class plantDisease(Enum):
     Brown_Rust = 0
@@ -96,6 +97,25 @@ def findDisease(model: Sequential, textureData: pd.DataFrame):
     # Получение номера болезни из предсказаний нейронной сети
     numDisease = modelPredict.index(max(modelPredict))
     print("Номер болезни: ", numDisease)
+
+
+def preparePlantAI():
+    # Читаем и объединяем текстурные данные нормализованных изображений
+    dataset = uniDataset()
+
+    # Подготавливаем и разделяем данные для обучения
+    dataSplit = splitDataset(dataset)
+
+    # Обучаем и тестируем нейронную сеть
+    model = aiTrainTest(dataSplit[0], dataSplit[1], dataSplit[2], dataSplit[3])
+
+    return model
+
+
+# Тестирование работы программы
+
+
+
 
 
 
