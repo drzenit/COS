@@ -11,6 +11,14 @@ from tensorflow.keras.layers import Flatten
 class plantDisease(Enum):
     Brown_Rust = 0
     Dark_brown_spotting = 1
+    Powdery_mildew = 2
+    Pyrenophorosis = 3
+    Root_rot = 4
+    Septoria = 5
+    Smut = 6
+    Snow_mold = 7
+    Striped_mosaic = 8
+    Yellow_rust = 9
 
 # Обработка csv файла с целевыми параметрами изображения
 def procFile(dataPath: str, label: int):
@@ -125,8 +133,12 @@ dataset = pd.DataFrame(dataset)  # Преобразование в pandas.DataFr
 testDS1 = dataset.loc[[3]]
 testDS2 = dataset.loc[[14]]
 testDS3 = dataset.loc[[22]]
+testDS4 = dataset.loc[[54]]
+testDS5 = dataset.loc[[154]]
 
 # Тестирования работы программы, выдача названия болезни по текстурным данным
 findDisease(AI_MODEL, testDS1)
 findDisease(AI_MODEL, testDS2)
 findDisease(AI_MODEL, testDS3)
+findDisease(AI_MODEL, testDS4)
+findDisease(AI_MODEL, testDS5)
