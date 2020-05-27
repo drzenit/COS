@@ -1,4 +1,5 @@
 from matplotlib import pyplot as plt
+import numpy as np
 import pandas as pd
 from skimage.feature import greycomatrix, greycoprops
 from skimage import io
@@ -39,10 +40,23 @@ def rgbSplit(image: io.imread):
 
 # Получение текстурных параметров изображения на основе glcm (статистические характеристики)
 def getTextureParam(r: io.imread, g: io.imread, b: io.imread):
+    # Номрировка слоев RGB
+    # r = np.asarray(r) / 255
+    # g = np.asarray(g) / 255
+    # b = np.asarray(b) / 255
+
     # Выделение смешанных слоев rgb
     rg = r - g
     rb = r - b
     gb = g - b
+
+    # Возвращение слоев в исходное состояние до нормировки, для glcm матрицы
+    # r = np.asarray(r * 255, int)
+    # g = np.asarray(g * 255, int)
+    # b = np.asarray(b * 255, int)
+    # rg = np.asarray(rg * 255, int)
+    # rb = np.asarray(rb * 255, int)
+    # gb = np.asarray(gb * 255, int)
 
     # Вывод смешанных слоев изображения
     io.imshow(rg)
