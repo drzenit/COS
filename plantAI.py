@@ -1,10 +1,15 @@
+from enum import Enum
 import pandas as pd
-from sklearn.model_selection import train_test_split
 import numpy as np
+from sklearn.model_selection import train_test_split
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.layers import Flatten
 
+# Болезни растений
+class plantDisease(Enum):
+    Brown_Rust = 0
+    Dark_brown_spotting = 1
 
 # Обработка csv файла с целевыми параметрами изображения
 def procFile(dataPath: str, label: int):
@@ -52,8 +57,8 @@ def splitDataset(dataset: pd.DataFrame):
 
     return feature_train, feature_test, label_train, label_test
 
-# Обучение и тестирование нейронной сети
-def aiTrainTest(feature_train, feature_test, label_train, label_test):
+# Обучение и тестирование нейронной сети, возвращение обученной модели
+def aiTrainTest(feature_train: pd.DataFrame, feature_test: pd.DataFrame, label_train: pd.DataFrame, label_test: pd.DataFrame):
     # Инициализируем нейронную сеть
     model = Sequential()
 
@@ -77,6 +82,21 @@ def aiTrainTest(feature_train, feature_test, label_train, label_test):
 
     randLoss, randAccuracy = model.evaluate(feature_test, label_test)
     print("Точность на СЛУЧАНОЙ выборке = ", randAccuracy)
+
+    return model
+
+# Определение болезни по текстурным данным
+def findDisease(model: Sequential, textureData: pd.DataFrame):
+    # Вывод поданных текстурных данных изображения
+    print("Текстурные данные изображения: ", textureData)
+
+    # Получение предсказаний нейронной сети
+    modelPredict = model.predict(textureData)
+
+    # Получение номера болезни из предсказаний нейронной сети
+    numDisease = modelPredict.index(max(modelPredict))
+    print("Номер болезни: ", numDisease)
+
 
 
 
