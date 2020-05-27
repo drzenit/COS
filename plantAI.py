@@ -95,10 +95,11 @@ def findDisease(model: Sequential, textureData: pd.DataFrame):
     modelPredict = model.predict(textureData)
 
     # Получение номера болезни из предсказаний нейронной сети
-    numDisease = modelPredict.index(max(modelPredict))
+    numDisease = np.argmax(modelPredict)
     print("Номер болезни: ", numDisease)
+    print("Название болезни: ", plantDisease(numDisease))
 
-
+# Подготовка программы к работе
 def preparePlantAI():
     # Читаем и объединяем текстурные данные нормализованных изображений
     dataset = uniDataset()
@@ -113,13 +114,19 @@ def preparePlantAI():
 
 
 # Тестирование работы программы
+AI_MODEL = preparePlantAI() # Получение обученной нейронной сети, вывод тестировачных данных
 
+dataset = uniDataset() # Получение датасета готовых реальных текстурных данных
+dataset = dataset.iloc[:, :-1] #  Удаление добавленных лэйблов
+dataset = np.asarray(dataset).astype(np.float32)  # Преобразование данных в float
+dataset = pd.DataFrame(dataset)  # Преобразование в pandas.DataFrame для удобства
 
+# Создание тестировачных сетов реальных текстурных данных
+testDS1 = dataset.loc[[3]]
+testDS2 = dataset.loc[[14]]
+testDS3 = dataset.loc[[22]]
 
-
-
-
-
-
-
-
+# Тестирования работы программы, выдача названия болезни по текстурным данным
+findDisease(AI_MODEL, testDS1)
+findDisease(AI_MODEL, testDS2)
+findDisease(AI_MODEL, testDS3)
