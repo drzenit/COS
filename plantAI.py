@@ -72,6 +72,9 @@ def splitDataset(dataset: pd.DataFrame):
     testLoss, testAccuracy = model.evaluate(feature_test, label_test)
     print("Точность TEST = ", testAccuracy)
 
+    testLoss, testAccuracy = model.evaluate(feature_test, label_test)
+    print("Точность TEST = ", testAccuracy)
+
 
 
 splitDataset(uniDataset())
