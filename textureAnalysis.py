@@ -71,37 +71,39 @@ def getTextureParam(r: io.imread, g: io.imread, b: io.imread):
     plt.title("Зелено-Синий GB")
     plt.show()
 
-    # Получение glcm матриц и статистических характеристик для слоев RGB
-    glcm = greycomatrix(r, distances=[2], angles=[0], levels=256)
-    statsR = greycoprops(glcm)
-    glcm = greycomatrix(g, distances=[2], angles=[0], levels=256)
-    statsG = greycoprops(glcm)
-    glcm = greycomatrix(b, distances=[2], angles=[0], levels=256)
-    statsB = greycoprops(glcm)
+    # Получение различных текстурных признаков
+    for prop in ["contrast", "dissimilarity", "homogeneity", "ASM", "energy", "correlation"]:
+        # Получение glcm матриц и статистических характеристик для слоев RGB
+        glcm = greycomatrix(r, distances=[2], angles=[0], levels=256)
+        statsR = greycoprops(glcm, prop)
+        glcm = greycomatrix(g, distances=[2], angles=[0], levels=256)
+        statsG = greycoprops(glcm, prop)
+        glcm = greycomatrix(b, distances=[2], angles=[0], levels=256)
+        statsB = greycoprops(glcm, prop)
 
-    # Получение glcm матриц и статистических характеристик для смешанных слоев RGB
-    glcm = greycomatrix(rg, distances=[2], angles=[0], levels=256)
-    statsRG = greycoprops(glcm)
-    glcm = greycomatrix(rb, distances=[2], angles=[0], levels=256)
-    statsRB = greycoprops(glcm)
-    glcm = greycomatrix(gb, distances=[2], angles=[0], levels=256)
-    statsGB = greycoprops(glcm)
+        # Получение glcm матриц и статистических характеристик для смешанных слоев RGB
+        glcm = greycomatrix(rg, distances=[2], angles=[0], levels=256)
+        statsRG = greycoprops(glcm, prop)
+        glcm = greycomatrix(rb, distances=[2], angles=[0], levels=256)
+        statsRB = greycoprops(glcm, prop)
+        glcm = greycomatrix(gb, distances=[2], angles=[0], levels=256)
+        statsGB = greycoprops(glcm, prop)
 
-    # Перевод данных в pd.DataFrame для удобства
-    statsR_DF = pd.DataFrame(statsR)
-    statsG_DF = pd.DataFrame(statsG)
-    statsB_DF = pd.DataFrame(statsB)
-    statsRG_DF = pd.DataFrame(statsRG)
-    statsRB_DF = pd.DataFrame(statsRB)
-    statsGB_DF = pd.DataFrame(statsGB)
+        # Перевод данных в pd.DataFrame для удобства
+        statsR_DF = pd.DataFrame(statsR)
+        statsG_DF = pd.DataFrame(statsG)
+        statsB_DF = pd.DataFrame(statsB)
+        statsRG_DF = pd.DataFrame(statsRG)
+        statsRB_DF = pd.DataFrame(statsRB)
+        statsGB_DF = pd.DataFrame(statsGB)
 
-    # Вывод статистических текстурных характеристик
-    print("Текстурные данные R ", statsR_DF)
-    print("Текстурные данные G ", statsG_DF)
-    print("Текстурные данные B ", statsB_DF)
-    print("Текстурные данные RG ", statsRG_DF)
-    print("Текстурные данные RB ", statsRB_DF)
-    print("Текстурные данные GB ", statsGB_DF)
+        # Вывод статистических текстурных характеристик
+        print("Текстурные данные R для ", prop, ' ', statsR_DF)
+        print("Текстурные данные G для ", prop, ' ', statsG_DF)
+        print("Текстурные данные B для ", prop, ' ', statsB_DF)
+        print("Текстурные данные RG для ", prop, ' ', statsRG_DF)
+        print("Текстурные данные RB для ", prop, ' ', statsRB_DF)
+        print("Текстурные данные GB для ", prop, ' ', statsGB_DF)
 
 
 image = readImage("data\Brown_rust\\1.jpg")
