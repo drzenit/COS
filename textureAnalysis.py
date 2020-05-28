@@ -40,7 +40,7 @@ def rgbSplit(image: io.imread):
 
 # Получение текстурных параметров изображения на основе glcm (статистические характеристики)
 def getTextureParam(r: io.imread, g: io.imread, b: io.imread):
-    # Номрировка слоев RGB
+    # Номрировка слоев RGB - для модуля C++
     # r = np.asarray(r) / 255
     # g = np.asarray(g) / 255
     # b = np.asarray(b) / 255
@@ -50,7 +50,7 @@ def getTextureParam(r: io.imread, g: io.imread, b: io.imread):
     rb = r - b
     gb = g - b
 
-    # Возвращение слоев в исходное состояние до нормировки, для glcm матрицы
+    # Возвращение слоев в исходное состояние до нормировки, для glcm матрицы  - для модуля C++
     # r = np.asarray(r * 255, int)
     # g = np.asarray(g * 255, int)
     # b = np.asarray(b * 255, int)
